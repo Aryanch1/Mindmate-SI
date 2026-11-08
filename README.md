@@ -1,89 +1,155 @@
-# MindMate AI
+<p align="center">
+  <img src="./banner.gif" alt="MindMate AI" width="100%" />
+</p>
 
-An open-source **AI assistant mobile app** built with **React Native (Expo)** and **TypeScript**.
+<h1 align="center">MindMate AI</h1>
 
-Chat with an AI model, summarize long text, rewrite it in a different tone, and get plain-language explanations of code — all from your phone, using **your own API key** with any OpenAI-compatible provider. No account, no backend, no tracking: your key and your chats never leave your device except to the API endpoint *you* configure.
+<p align="center">
+  <strong>Your pocket AI assistant — chat, summarize, rewrite, and understand code, right from your phone.</strong>
+</p>
 
-> **No API key? No problem.** MindMate ships with a built-in **demo mode** that generates replies on-device, so you can explore the whole app immediately after installing it.
+<p align="center">
+  <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/React_Native-0.76-61DAFB?logo=react&logoColor=black" alt="React Native" />
+  <img src="https://img.shields.io/badge/Expo-SDK_52-000020?logo=expo&logoColor=white" alt="Expo SDK 52" />
+  <img src="https://img.shields.io/badge/Platforms-Android%20%7C%20iOS-brightgreen" alt="Platforms" />
+  <img src="https://img.shields.io/badge/PRs-welcome-orange.svg" alt="PRs welcome" />
+</p>
 
-## Features
+---
 
-- **AI Chat** — multi-turn chat against any OpenAI-compatible chat-completions API, with on-device history persistence.
-- **Summarize** — condense long text into key bullet points.
-- **Rewrite** — rephrase text in a *formal*, *casual*, or *shorter* style.
-- **Explain code** — paste a snippet and get a step-by-step plain-language explanation, including complexity for algorithms.
-- **Bring your own key** — works with OpenAI and any compatible endpoint (custom base URL + model in Settings).
-- **Demo mode** — deterministic on-device replies, zero setup.
-- **Private by design** — settings and chat history are stored only in the app's local storage.
+## 🤖 What is MindMate AI?
 
-## Screenshots
+**MindMate AI** is a free, open-source mobile app that puts an AI assistant in your pocket. Ask questions in chat, paste in long text and get a summary, rewrite anything in a different tone, or drop in code and get a plain-English explanation of what it does.
 
-| Chat | AI Tools | Settings |
-| --- | --- | --- |
-| _Coming soon_ | _Coming soon_ | _Coming soon_ |
+It works with **your own API key** and **any OpenAI-compatible API** — OpenAI, or any provider or local server that speaks the same protocol. There is **no account to create, no backend server, and no tracking**: your key stays on your phone, and requests go straight from your phone to the endpoint *you* choose.
 
-## Getting started
+> **No API key? No problem.** MindMate ships with a built-in **demo mode** that answers on-device, so the whole app works the moment you install it — no key, no sign-up, no internet needed.
 
-### Prerequisites
+---
 
-- Node.js 18 or newer
-- The [Expo Go](https://expo.dev/go) app on your phone, or an Android/iOS simulator
+## ❤️ Why people like it
 
-### Run locally
+- 🔐 **Private by design** — your API key and settings are stored only on your device; there is no MindMate server collecting anything.
+- 🎭 **Demo mode built in** — try every feature instantly, even offline, before plugging in a key.
+- 🔌 **Provider freedom** — not locked to one company; point it at any OpenAI-compatible endpoint and pick your model.
+- 🆓 **Free and open source** — MIT licensed. Read the code, fork it, make it yours.
+- 📱 **Runs anywhere** — Android and iOS from a single TypeScript codebase.
+- 🌙 **Clean dark UI** — a calm, readable interface designed for phones.
+
+---
+
+## ✨ Features
+
+| Feature | What it does |
+| --- | --- |
+| 💬 **AI Chat** | A friendly chat screen for questions, ideas, drafts, and everyday help. |
+| 📝 **Summarize** | Paste long text — articles, notes, emails — and get the key points back in seconds. |
+| ✍️ **Rewrite** | Restyle any text three ways: **Formal**, **Casual**, or **Shorter**. |
+| 💻 **Explain Code** | Paste a code snippet and get a plain-language walkthrough of what it does. |
+| 🎭 **Demo Mode** | Full app experience with on-device sample intelligence — no key, no network. |
+| ⚙️ **Your Settings** | API key, base URL, and model name, saved on your device with AsyncStorage. |
+| 🧭 **Simple Tabs** | Chat, Tools, and Settings — everything is one tap away. |
+
+---
+
+## 📲 Get the app on your phone
+
+### Option 1 — Run it with Expo Go (fastest)
+
+1. Install **Expo Go** on your Android or iPhone.
+2. On your computer:
+   ```bash
+   git clone https://github.com/Aryanch1/mindmate-ai.git
+   cd mindmate-ai
+   npm install
+   npx expo start
+   ```
+3. Scan the QR code with Expo Go. Done — the app opens on your phone. 🎉
+
+### Option 2 — Build a standalone APK (Android)
 
 ```bash
-git clone https://github.com/Aryanch1/mindmate-ai.git
-cd mindmate-ai
-npm install
-npx expo start
+npm install -g eas-cli
+eas login
+eas build -p android --profile preview
 ```
 
-Scan the QR code with Expo Go (Android) or the Camera app (iOS).
+EAS builds in the cloud and gives you a downloadable **.apk** you can install directly on your phone — no Expo Go needed afterwards. (The `preview` profile in `eas.json` is already set to produce an APK.)
 
-### Connect a live model (optional)
+### Then, to unlock live AI
 
-1. Open the **Settings** tab.
-2. Turn **Demo mode** off.
-3. Paste your API key, base URL (default `https://api.openai.com/v1`), and model name (default `gpt-4o-mini`).
-4. Tap **Save settings** — the Chat tab now talks to the live model.
+Open the **Settings** tab in the app, paste your API key, set the base URL and model (defaults work for OpenAI), and start chatting. Leave the key empty anytime to return to demo mode.
 
-## Project structure
+---
+
+## 🧠 How it works
+
+- **One codebase, every phone** — React Native + Expo Router with file-based tabs (Chat / Tools / Settings).
+- **A tiny AI client** (`lib/ai.ts`) talks to any OpenAI-compatible chat-completions endpoint using your key, and falls back to on-device demo replies when no key is set.
+- **On-device storage** (`lib/storage.ts`) persists your settings with AsyncStorage — nothing is synced anywhere.
+- **Type-safe end to end** — written in TypeScript and checked in CI on every push.
 
 ```
 app/
-  _layout.tsx            Root layout + settings provider
-  (tabs)/
-    _layout.tsx          Bottom tab navigation
-    index.tsx            Chat screen
-    tools.tsx            Summarize / Rewrite / Explain code
-    settings.tsx         API key, base URL, model, demo mode
-components/
-  MessageBubble.tsx      Chat message bubble
+  (tabs)/index.tsx      → Chat screen
+  (tabs)/tools.tsx      → Summarize · Rewrite · Explain Code
+  (tabs)/settings.tsx   → API key, base URL, model
 lib/
-  ai.ts                  OpenAI-compatible client + demo engine
-  storage.ts             AsyncStorage persistence (settings + chat)
-  settings-context.tsx   React context for shared settings
-  types.ts               Shared TypeScript types
-  theme.ts               Color palette
+  ai.ts                 → OpenAI-compatible client + demo mode
+  storage.ts            → On-device settings
+  theme.ts              → Dark theme
+components/
+  MessageBubble.tsx     → Chat bubbles
 ```
 
-## Tech stack
+---
 
-- React Native 0.76 · Expo SDK 52 · Expo Router 4
-- TypeScript (strict)
-- OpenAI-compatible Chat Completions API
+## 🛠️ Tech stack
 
-## Roadmap
+**TypeScript** · **React Native 0.76** · **Expo SDK 52** · **Expo Router** · **AsyncStorage** · **GitHub Actions CI**
 
-- Streaming responses
-- Image input (vision models) and voice input
-- Multiple saved conversations
-- Prompt library
+---
 
-## Contributing
+## ❓ FAQ
 
-Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). Good first issues are labeled in the issue tracker.
+**Is it really free?**
+Yes — the app is MIT-licensed open source. If you connect your own API key, your provider's usage pricing applies to your requests; demo mode is always free.
 
-## License
+**Do I need an API key?**
+No. Demo mode covers the full app offline. A key only makes the answers live.
 
-[MIT](LICENSE) © Aryanmouli Cherupalli
+**Where is my API key stored?**
+Only on your phone, in the app's local storage. It is sent only to the API endpoint you configure — never to us (there is no "us"; the app has no backend).
+
+**Can I use a local model?**
+Yes — point the base URL in Settings at any OpenAI-compatible local server (for example, one running on your own machine or network).
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] Streaming responses, token by token
+- [ ] Saved chat history
+- [ ] Voice input
+- [ ] Share text into MindMate from other apps
+- [ ] More rewrite styles
+
+Ideas welcome — open an issue!
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Fork the repo, create a branch, and open a pull request. Please run `npm run typecheck` before submitting so CI stays green. See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
+
+## 📄 License
+
+MIT — see [LICENSE](./LICENSE).
+
+---
+
+<p align="center">
+  Built by <a href="https://github.com/Aryanch1"><strong>Aryanmouli Cherupalli</strong></a> · If MindMate AI is useful to you, a ⭐ on the repo is the best thank-you!
+</p>
