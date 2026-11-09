@@ -32,8 +32,8 @@ export default function SettingsScreen() {
   const save = async () => {
     await update({
       apiKey: apiKey.trim(),
-      baseUrl: baseUrl.trim() || 'https://api.openai.com/v1',
-      model: model.trim() || 'gpt-4o-mini',
+      baseUrl: baseUrl.trim() || 'https://generativelanguage.googleapis.com/v1beta/openai/',
+      model: model.trim() || 'gemini-3.5-flash-lite',
     });
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
@@ -45,7 +45,7 @@ export default function SettingsScreen() {
         <View style={styles.rowText}>
           <Text style={styles.label}>Demo mode</Text>
           <Text style={styles.hint}>
-            Replies are generated on-device. Turn off and add an API key for live AI answers.
+            Replies are generated on-device. Turn off for live AI — the web version is live automatically; the mobile app uses your API key below.
           </Text>
         </View>
         <Switch
@@ -76,7 +76,7 @@ export default function SettingsScreen() {
         style={styles.input}
         value={baseUrl}
         onChangeText={setBaseUrl}
-        placeholder="https://api.openai.com/v1"
+        placeholder="https://generativelanguage.googleapis.com/v1beta/openai/"
         placeholderTextColor={theme.muted}
         autoCapitalize="none"
         autoCorrect={false}
@@ -87,7 +87,7 @@ export default function SettingsScreen() {
         style={styles.input}
         value={model}
         onChangeText={setModel}
-        placeholder="gpt-4o-mini"
+        placeholder="gemini-3.5-flash-lite"
         placeholderTextColor={theme.muted}
         autoCapitalize="none"
         autoCorrect={false}
