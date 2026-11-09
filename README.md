@@ -75,12 +75,13 @@ It works with **your own API key** and **any OpenAI-compatible API** — OpenAI,
    npx expo start
    ```
 
-4. **Sign in on the computer when asked.** If the browser sign-in opens but the terminal still says "Not logged in", use a token instead: create one at expo.dev → your account → Settings → Access tokens, then in the *same* PowerShell/terminal window run:
+4. **Sign in on the computer when asked.** To check whether you're already signed in, run `npx expo whoami` — it prints your Expo username if you're logged in, or "Not logged in" if you're not. If the browser sign-in opens but the terminal still says "Not logged in", use a token instead: create one at expo.dev → your account → Settings → Access tokens, then in the *same* PowerShell/terminal window run:
    ```powershell
    $env:EXPO_TOKEN = "paste-your-token"   # PowerShell
    npx expo start
    ```
    (macOS/Linux: `EXPO_TOKEN=paste-your-token npx expo start`)
+   Then repeat `npx expo whoami` — if it now prints the name of the account you're logged in with, you're signed in and ready.
 
 5. **Scan the QR code** shown in the terminal with Expo Go (Android) or the Camera app (iPhone). The app opens on your phone. 🎉 While it runs, press `r` in the terminal to reload after code changes.
 
