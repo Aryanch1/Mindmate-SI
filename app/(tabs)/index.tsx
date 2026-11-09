@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import { MessageBubble } from '@/components/MessageBubble';
-import { chatCompletion } from '@/lib/ai';
+import { chatCompletion, HOSTED_MODEL, isLive } from '@/lib/ai';
 import { useSettings } from '@/lib/settings-context';
 import { clearChat, loadChat, saveChat } from '@/lib/storage';
 import { theme } from '@/lib/theme';
@@ -84,7 +84,7 @@ export default function ChatScreen() {
     setError(null);
   }, []);
 
-  const inDemo = settings.demoMode || !settings.apiKey.trim();
+  const inDemo = !isLive(settings);
 
   return (
     <KeyboardAvoidingView
@@ -94,7 +94,7 @@ export default function ChatScreen() {
     >
       <View style={styles.banner}>
         <Text style={styles.bannerText}>
-          {inDemo ? 'Demo mode — replies are generated on-device' : `Live · ${settings.model}`}
+          {inDemo ? 'Demo mode — replies are generated on-device' : `Live · ${settings.apiKey.trim() ? settings.model : HOSTED_MODEL}`}
         </Text>
         <TouchableOpacity onPress={reset} accessibilityLabel="Clear chat">
           <Text style={styles.clearText}>Clear</Text>

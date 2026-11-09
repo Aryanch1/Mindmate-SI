@@ -1,16 +1,30 @@
+import { Platform } from 'react-native';
+
 import type { AiSettings, ChatMessage, RewriteMode } from './types';
 
 /**
  * AI client for MindMate.
  *
  * Talks to any OpenAI-compatible chat-completions endpoint using the
- * user's own API key (bring your own key — nothing is proxied through
- * a MindMate server, because there isn't one).
+ * user's own API key (bring your own key).
  *
- * When demo mode is on, or no API key is configured, replies are
+ * On the hosted web version, when the user has not added their own key,
+ * requests go to the site's own /api/chat endpoint, which holds a
+ * server-side key — so the web app answers with live AI with no setup.
+ *
+ * When demo mode is on, or no live route is available, replies are
  * produced by a small on-device demo engine so the app is fully
  * explorable without a key.
  */
+
+/** Model used by the hosted web endpoint (kept in sync with api/chat.js). */
+export const HOSTED_MODEL = 'gemini-3.5-flash-lite';
+
+/** True when replies will come from a live model rather than the demo engine. */
+export function isLive(settings: AiSettings): boolean {
+  if (settings.demoMode) return false;
+  return Boolean(settings.apiKey.trim()) || Platform.OS === 'web';
+}
 
 const SYSTEM_PROMPT =
   'You are MindMate, a concise and helpful AI assistant inside a mobile app. ' +
@@ -25,9 +39,53 @@ export async function chatCompletion(
   messages: Pick<ChatMessage, 'role' | 'content'>[],
   settings: AiSettings,
 ): Promise<string> {
-  if (settings.demoMode || !settings.apiKey.trim()) {
-    return demoReply(messages);
+  if (!settings.demoMode) {
+    if (settings.apiKey.trim()) {
+      return directCompletion(messages, settings);
+    }
+    if (Platform.OS === 'web') {
+      try {
+        return await hostedCompletion(messages);
+      } catch {
+        // Hosted endpoint unavailable (e.g. no server key configured):
+        // fall back to the demo engine instead of showing an error.
+        return demoReply(messages);
+      }
+    }
   }
+  return demoReply(messages);
+}
+
+async function hostedCompletion(
+  messages: Pick<ChatMessage, 'role' | 'content'>[],
+): Promise<string> {
+  let response: Response;
+  try {
+    response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
+      }),
+    });
+  } catch {
+    throw new Error('Network request failed.');
+  }
+  const data = (await response.json().catch(() => ({}))) as ChatCompletionResponse;
+  if (!response.ok) {
+    throw new Error(data.error?.message ?? `Hosted request failed with status ${response.status}.`);
+  }
+  const content = data.choices?.[0]?.message?.content?.trim();
+  if (!content) {
+    throw new Error('The API returned an empty response.');
+  }
+  return content;
+}
+
+async function directCompletion(
+  messages: Pick<ChatMessage, 'role' | 'content'>[],
+  settings: AiSettings,
+): Promise<string> {
 
   const url = `${settings.baseUrl.replace(/\/+$/, '')}/chat/completions`;
   const apiKey = settings.apiKey.trim();
