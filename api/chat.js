@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY || process.env.Gemini_Api_key_for_MindMateSI;
   if (!apiKey) {
     res.status(501).json({ error: { message: 'Hosted AI is not configured' } });
     return;
