@@ -58,32 +58,61 @@ It works with **your own API key** and **any OpenAI-compatible API** — OpenAI,
 
 ### Option 1 — Run it with Expo Go (fastest)
 
-**You need:** Node.js 20+ on your computer, the **Expo Go** app on your phone (SDK 58), and a free Expo account. Your phone and computer must be on the **same Wi-Fi network**.
+**You need:** Node.js 20+ on your computer, the **Expo Go** app on your phone (SDK 58), and a free Expo account. Your phone and computer must be on the **same Wi-Fi network** — the phone loads the app from your computer over Wi-Fi, so if they are on different networks the QR code will not connect.
 
-1. **Sign in to Expo Go on your phone** with your Expo account (Profile tab → Sign in). The phone and the computer must use the **same account**, otherwise the app will refuse to open.
+**Step 1 — Download the project.** Either clone it:
+```bash
+git clone https://github.com/Aryanch1/Mindmate-SI.git
+cd Mindmate-SI
+```
+…or download the ZIP from GitHub (green **Code** button → *Download ZIP*), unzip it, and open a terminal (PowerShell on Windows) inside the project folder. Every command below is run in that folder.
 
-2. **Download the project** on your computer — either clone it:
-   ```bash
-   git clone https://github.com/Aryanch1/Mindmate-SI.git
-   cd Mindmate-SI
-   ```
-   …or download the ZIP from GitHub (green **Code** button → *Download ZIP*), unzip it, and open a terminal in the folder.
+**Step 2 — Install the dependencies.**
+```bash
+npm install
+```
+This downloads everything the project needs into a `node_modules` folder. You only need to re-run it when the project's dependencies change.
 
-3. **Install and start:**
-   ```bash
-   npm install
-   npx expo start
-   ```
+**Step 3 — Check whether you are logged in to Expo.**
+```bash
+npx expo whoami
+```
+- If it prints your Expo account name (shown in **green**), you are logged in — skip to Step 6.
+- If it says **"Not logged in"**, continue to Step 4.
 
-4. **Sign in on the computer when asked.** To check whether you're already signed in, run `npx expo whoami` — it prints your Expo username if you're logged in, or "Not logged in" if you're not. If the browser sign-in opens but the terminal still says "Not logged in", use a token instead: create one at expo.dev → your account → Settings → Access tokens, then in the *same* PowerShell/terminal window run:
+**Step 4 — Log in.**
+```bash
+npx expo login
+```
+This opens a browser sign-in. When it finishes, run `npx expo whoami` again. If it now prints your account name in green, you are logged in — skip to Step 6. If it *still* says "Not logged in" (the browser sign-in sometimes finishes without the terminal noticing), use the access-token method in Step 5 — it always works.
+
+**Step 5 — Log in with an access token (the reliable method).**
+1. Go to **expo.dev** and sign in → open your account → **Settings** → **Access tokens** → **Create token**. Give it any name and create it.
+2. **Copy the token right away** — it is shown only once. If you lose it, just delete it and create a new one.
+3. In the **same PowerShell window** you will run the app from, set the token (paste your token between the quotes):
    ```powershell
-   $env:EXPO_TOKEN = "paste-your-token"   # PowerShell
-   npx expo start
+   $env:EXPO_TOKEN = "paste-your-token"
    ```
-   (macOS/Linux: `EXPO_TOKEN=paste-your-token npx expo start`)
-   Then repeat `npx expo whoami` — if it now prints the name of the account you're logged in with, you're signed in and ready.
+   On macOS/Linux instead: `export EXPO_TOKEN="paste-your-token"`
+   
+   The token only lives in that one window — if you close PowerShell or open a new window, set it again in the new window before starting.
 
-5. **Scan the QR code** shown in the terminal with Expo Go (Android) or the Camera app (iPhone). The app opens on your phone. 🎉 While it runs, press `r` in the terminal to reload after code changes.
+**Step 6 — Verify the login.**
+```bash
+npx expo whoami
+```
+It should now print the name of the account you are logged in with, **in green**. That green name is the proof you are signed in — do not continue until you see it.
+
+**Step 7 — Start the app.**
+```bash
+npx expo start
+```
+A **QR code** appears in the terminal. Leave this window open while you use the app — it is the server your phone talks to. (Press `r` in this window to reload the app after changing code, and `Ctrl+C` to stop the server.)
+
+**Step 8 — Open it on your phone.**
+1. Open **Expo Go** on your phone and sign in (Profile tab) with the **same Expo account / email** you logged in with on the computer in Steps 3–6. This must match — if the phone is signed in with a different account (or not signed in), Expo Go will refuse to open the project.
+2. Scan the QR code from Step 7 — with Expo Go's scanner on Android, or the Camera app on iPhone.
+3. The app opens on your phone. 🎉 That's it!
 
 ### Option 2 — Build a standalone APK (Android)
 
