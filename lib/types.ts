@@ -18,9 +18,9 @@ export interface AiSettings {
 
 export const DEFAULT_SETTINGS: AiSettings = {
   apiKey: '',
-  baseUrl: 'https://api.openai.com/v1',
-  model: 'gpt-4o-mini',
-  demoMode: true,
+  baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai/',
+  model: 'gemini-3.5-flash-lite',
+  demoMode: false,
 };
 
 export type RewriteMode = 'formal' | 'casual' | 'shorter';
