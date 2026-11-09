@@ -58,15 +58,31 @@ It works with **your own API key** and **any OpenAI-compatible API** — OpenAI,
 
 ### Option 1 — Run it with Expo Go (fastest)
 
-1. Install **Expo Go** on your Android or iPhone.
-2. On your computer:
+**You need:** Node.js 20+ on your computer, the **Expo Go** app on your phone (SDK 58), and a free Expo account. Your phone and computer must be on the **same Wi-Fi network**.
+
+1. **Sign in to Expo Go on your phone** with your Expo account (Profile tab → Sign in). The phone and the computer must use the **same account**, otherwise the app will refuse to open.
+
+2. **Download the project** on your computer — either clone it:
    ```bash
-   git clone https://github.com/Aryanch1/mindmate-ai.git
-   cd mindmate-ai
+   git clone https://github.com/Aryanch1/Mindmate-SI.git
+   cd Mindmate-SI
+   ```
+   …or download the ZIP from GitHub (green **Code** button → *Download ZIP*), unzip it, and open a terminal in the folder.
+
+3. **Install and start:**
+   ```bash
    npm install
    npx expo start
    ```
-3. Scan the QR code with Expo Go. Done — the app opens on your phone. 🎉
+
+4. **Sign in on the computer when asked.** If the browser sign-in opens but the terminal still says "Not logged in", use a token instead: create one at expo.dev → your account → Settings → Access tokens, then in the *same* PowerShell/terminal window run:
+   ```powershell
+   $env:EXPO_TOKEN = "paste-your-token"   # PowerShell
+   npx expo start
+   ```
+   (macOS/Linux: `EXPO_TOKEN=paste-your-token npx expo start`)
+
+5. **Scan the QR code** shown in the terminal with Expo Go (Android) or the Camera app (iPhone). The app opens on your phone. 🎉 While it runs, press `r` in the terminal to reload after code changes.
 
 ### Option 2 — Build a standalone APK (Android)
 
@@ -80,7 +96,14 @@ EAS builds in the cloud and gives you a downloadable **.apk** you can install di
 
 ### Then, to unlock live AI
 
-Open the **Settings** tab in the app, paste your API key, set the base URL and model (defaults work for OpenAI), and start chatting. Leave the key empty anytime to return to demo mode.
+The app works out of the box in an on-device **demo mode**. For real AI answers, open the **Settings** tab, turn **Demo mode OFF**, paste an API key, set the base URL and model, and tap **Save settings**.
+
+Free option — Google Gemini (key from Google AI Studio, aistudio.google.com/apikey):
+
+- **Base URL:** `https://generativelanguage.googleapis.com/v1beta/openai/`
+- **Model:** `gemini-3.5-flash-lite`
+
+OpenAI also works with the defaults (base URL `https://api.openai.com/v1`, model `gpt-4o-mini`) and your own OpenAI key.
 
 ---
 
