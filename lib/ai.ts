@@ -30,14 +30,22 @@ export async function chatCompletion(
   }
 
   const url = `${settings.baseUrl.replace(/\/+$/, '')}/chat/completions`;
+  const apiKey = settings.apiKey.trim();
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${apiKey}`,
+  };
+  // Google's newer Gemini "auth keys" (which start with "AQ.") are also
+  // accepted via Google's own key header; send it alongside Bearer so both
+  // key generations work against the Gemini OpenAI-compatible endpoint.
+  if (settings.baseUrl.includes('googleapis.com')) {
+    headers['x-goog-api-key'] = apiKey;
+  }
   let response: Response;
   try {
     response = await fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${settings.apiKey.trim()}`,
-      },
+      headers,
       body: JSON.stringify({
         model: settings.model,
         messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
@@ -48,9 +56,22 @@ export async function chatCompletion(
     throw new Error('Network request failed. Check your connection and the API base URL in Settings.');
   }
 
-  const data = (await response.json().catch(() => ({}))) as ChatCompletionResponse;
+  const rawBody = await response.text().catch(() => '');
+  let data: ChatCompletionResponse = {};
+  try {
+    data = JSON.parse(rawBody) as ChatCompletionResponse;
+  } catch {
+    data = {};
+  }
   if (!response.ok) {
-    throw new Error(data.error?.message ?? `API request failed with status ${response.status}.`);
+    const detail =
+      data.error?.message ??
+      (rawBody && !rawBody.trimStart().startsWith('<') ? rawBody.slice(0, 160) : '');
+    throw new Error(
+      detail
+        ? `API request failed with status ${response.status}: ${detail}`
+        : `API request failed with status ${response.status}.`,
+    );
   }
   const content = data.choices?.[0]?.message?.content?.trim();
   if (!content) {
