@@ -12,7 +12,7 @@
   <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT" />
   <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/React_Native-0.76-61DAFB?logo=react&logoColor=black" alt="React Native" />
-  <img src="https://img.shields.io/badge/Expo-SDK_52-000020?logo=expo&logoColor=white" alt="Expo SDK 52" />
+  <img src="https://img.shields.io/badge/Expo-SDK_58-000020?logo=expo&logoColor=white" alt="Expo SDK 58" />
   <img src="https://img.shields.io/badge/Platforms-Android%20%7C%20iOS-brightgreen" alt="Platforms" />
   <img src="https://img.shields.io/badge/PRs-welcome-orange.svg" alt="PRs welcome" />
 </p>
@@ -108,7 +108,7 @@ components/
 
 ## 🛠️ Tech stack
 
-**TypeScript** · **React Native 0.76** · **Expo SDK 52** · **Expo Router** · **AsyncStorage** · **GitHub Actions CI**
+**TypeScript** · **React Native 0.88** · **Expo SDK 58** · **Expo Router** · **AsyncStorage** · **GitHub Actions CI**
 
 ---
 

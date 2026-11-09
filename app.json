@@ -1,1 +1,43 @@
-{"expo":{"android":{"adaptiveIcon":{"backgroundColor":"#0B1220","foregroundImage":"./assets/adaptive-icon.png"},"package":"com.aryanch1.mindmate"},"experiments":{"typedRoutes":true},"icon":"./assets/icon.png","ios":{"bundleIdentifier":"com.aryanch1.mindmate","supportsTablet":true},"name":"MindMate AI","orientation":"portrait","plugins":["expo-router"],"scheme":"mindmate","slug":"mindmate-ai","splash":{"backgroundColor":"#0B1220","image":"./assets/splash.png","resizeMode":"contain"},"userInterfaceStyle":"automatic","version":"1.0.0","web":{"favicon":"./assets/favicon.png"}}}
+{
+  "expo": {
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0B1220",
+        "foregroundImage": "./assets/adaptive-icon.png"
+      },
+      "package": "com.aryanch1.mindmate"
+    },
+    "experiments": {
+      "typedRoutes": true
+    },
+    "icon": "./assets/icon.png",
+    "ios": {
+      "bundleIdentifier": "com.aryanch1.mindmate",
+      "supportsTablet": true
+    },
+    "name": "MindMate AI",
+    "orientation": "portrait",
+    "plugins": [
+      "expo-router",
+      "expo-asset",
+      "expo-status-bar",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0B1220",
+          "image": "./assets/splash.png",
+          "imageWidth": 200,
+          "resizeMode": "contain"
+        }
+      ],
+      "expo-font"
+    ],
+    "scheme": "mindmate",
+    "slug": "mindmate-ai",
+    "userInterfaceStyle": "automatic",
+    "version": "1.0.0",
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
